@@ -1,0 +1,7 @@
+{
+  "name": "Ionic-React-BMI-calculator",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
