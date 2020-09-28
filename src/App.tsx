@@ -5,6 +5,8 @@ import {
   IonContent,
   IonToolbar,
   IonTitle,
+  IonAlert, 
+  IonButton, 
 } from "@ionic/react";
 import BmiButtons from './components/BmiButtons'
 import BmiResult from './components/BmiResult'
@@ -34,22 +36,36 @@ const App: React.FC = () => {
   const [result, setResult] = useState(0)
   const [weight, setWeight] = useState('')
   const [height, setHeight] = useState('')
-  const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
 
   const calculateResult = () => {
     const nWeight = Number(weight)
     const nHeight = Number(height)
+    const sWeightError = 'Weight is wrong'
+    const sHeightError = 'Height is wrong'
 
-    if(nWeight && nHeight) {
+    if(nWeight > 0 && nHeight > 0) {
       setResult(nHeight /Math.pow(nWeight, 2))
+    } else if (!(nWeight > 0) && nHeight > 0) {
+      setErrorMessage(sHeightError)
+    } else if ( nWeight > 0 && !(nHeight > 0) ) {
+      setErrorMessage(sWeightError)
     } else {
-      setIsError(true)
+      setErrorMessage(sWeightError + " and <br>" +sHeightError.toLowerCase())
     }
   }
 
   return (
     <IonApp>
+      <IonAlert
+          isOpen={(errorMessage.length > 0)}
+          header={'Wrong data'}
+          subHeader={'Please enter correct data.'}
+          message={errorMessage}
+          buttons={['OK']}
+          onDidDismiss={() => setErrorMessage('')}
+        />      
       <IonHeader>
         <IonToolbar color="primary">
           <IonTitle>BMI Calculate</IonTitle>
