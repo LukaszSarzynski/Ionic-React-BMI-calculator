@@ -1,18 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
   IonApp,
   IonHeader,
   IonContent,
   IonToolbar,
   IonTitle,
-  IonRow,
-  IonCol,
-  IonItem,
-  IonLabel,
-  IonInput,  
 } from "@ionic/react";
 import BmiButtons from './components/BmiButtons'
 import BmiResult from './components/BmiResult'
+import BmiInput from './components/BmiInput'
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -36,48 +32,33 @@ import "./theme/variables.css";
 const App: React.FC = () => {
 
   const [result, setResult] = useState(0)
+  const [weight, setWeight] = useState('')
+  const [height, setHeight] = useState('')
+  const [isError, setIsError] = useState(false)
 
-  const refWeight = useRef<HTMLIonInputElement>(null);
-  const refHeight = useRef<HTMLIonInputElement>(null);
 
   const calculateResult = () => {
-    const nWeight = Number(refWeight.current!.value)
-    const nHeight = Number(refHeight.current!.value)
+    const nWeight = Number(weight)
+    const nHeight = Number(height)
 
     if(nWeight && nHeight) {
       setResult(nHeight /Math.pow(nWeight, 2))
     } else {
-      clearInput()
+      setIsError(true)
     }
-  }
-
-  const clearInput = () => {
-    refWeight.current!.value = ''
-    refHeight.current!.value = ''
-    setResult(0)
   }
 
   return (
     <IonApp>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="primary">
           <IonTitle>BMI Calculate</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-          <IonRow>
-            <IonCol>
-              <IonItem>
-                <IonLabel position="floating">Your heitht</IonLabel>
-                <IonInput ref={refWeight} />
-              </IonItem>
-              <IonItem>
-                <IonLabel position="floating">Your weigth</IonLabel>
-                <IonInput ref={refHeight} />
-              </IonItem>            
-            </IonCol>
-          </IonRow>
-          <BmiButtons onCalculate={() => calculateResult()} onClear={() => clearInput()} />
+          <BmiInput onValueChange={(v) => setWeight(v)} sLabel="Your heitht" />
+          <BmiInput onValueChange={(v) => setHeight(v)} sLabel="Your weigth" />
+          <BmiButtons onCalculate={() => calculateResult()} />
           <BmiResult nResult={result} />
       </IonContent>
     </IonApp>

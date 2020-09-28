@@ -5,9 +5,9 @@ import {
     IonButton,
     IonIcon,
   } from "@ionic/react";
-import { checkmarkCircleOutline, closeCircleOutline } from 'ionicons/icons'
+import { checkmarkCircleOutline } from 'ionicons/icons'
 
-const BmiButtons: React.FC<{onCalculate: () => void; onClear: () => void }> = (props) => {
+const BmiButtons: React.FC<{onCalculate: () => void}> = (props) => {
     return (
               <IonRow>
                 <IonCol>
@@ -15,13 +15,7 @@ const BmiButtons: React.FC<{onCalculate: () => void; onClear: () => void }> = (p
                     <IonIcon slot="start" icon={checkmarkCircleOutline} />
                     Calculate
                   </IonButton>
-                </IonCol>
-                <IonCol className="ion-text-right">
-                  <IonButton onClick={() => props.onClear() }>
-                    <IonIcon slot="start" icon={closeCircleOutline} />
-                    Reset
-                  </IonButton>
-                </IonCol>          
+                </IonCol>        
               </IonRow>
       )
 }
