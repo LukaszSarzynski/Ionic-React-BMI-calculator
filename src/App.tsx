@@ -5,21 +5,14 @@ import {
   IonContent,
   IonToolbar,
   IonTitle,
-  IonGrid,
   IonRow,
   IonCol,
   IonItem,
   IonLabel,
-  IonInput,
-  IonButton,
-  IonIcon,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
+  IonInput,  
 } from "@ionic/react";
-import { checkmarkCircleOutline, closeCircleOutline } from 'ionicons/icons'
+import BmiButtons from './components/BmiButtons'
+import BmiResult from './components/BmiResult'
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -39,7 +32,6 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import { isNumber } from "util";
 
 const App: React.FC = () => {
 
@@ -73,7 +65,6 @@ const App: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <IonGrid>
           <IonRow>
             <IonCol>
               <IonItem>
@@ -86,31 +77,8 @@ const App: React.FC = () => {
               </IonItem>            
             </IonCol>
           </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonButton onClick={() => calculateResult()}>
-                <IonIcon slot="start" icon={checkmarkCircleOutline} />
-                Calculate
-              </IonButton>
-            </IonCol>
-            <IonCol className="ion-text-right">
-              <IonButton onClick={() => clearInput()}>
-                <IonIcon slot="start" icon={closeCircleOutline} />
-                Reset
-              </IonButton>
-            </IonCol>          
-          </IonRow>
-        </IonGrid>
-        {(result > 0) && 
-        <IonCard>
-          <IonCardContent>
-            <IonCardHeader>
-              <IonCardSubtitle>Your <b>Body Mass Index</b> is equal:</IonCardSubtitle>
-              <IonCardTitle>{result}</IonCardTitle>
-            </IonCardHeader>
-          </IonCardContent>
-        </IonCard>
-        }
+          <BmiButtons onCalculate={() => calculateResult()} onClear={() => clearInput()} />
+          <BmiResult nResult={result} />
       </IonContent>
     </IonApp>
   )
