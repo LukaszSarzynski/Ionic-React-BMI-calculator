@@ -7,7 +7,7 @@ import {
     IonCardTitle,
   } from "@ionic/react";
 
-const BmiResult: React.FC<{nResult: Number}> = ({nResult}) => {
+const BmiResult: React.FC<{nResult: number}> = ({nResult}) => {
 
     if(nResult <= 0) return null
 
@@ -16,7 +16,7 @@ const BmiResult: React.FC<{nResult: Number}> = ({nResult}) => {
               <IonCardContent>
                 <IonCardHeader>
                   <IonCardSubtitle>Your <b>Body Mass Index</b> is equal:</IonCardSubtitle>
-                  <IonCardTitle>{nResult}</IonCardTitle>
+                  <IonCardTitle className="ion-text-center">{nResult.toFixed(2)}</IonCardTitle>
                 </IonCardHeader>
               </IonCardContent>
             </IonCard>
